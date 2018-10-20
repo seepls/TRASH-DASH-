@@ -1,0 +1,13 @@
+Basic idea of project is to build a app to distribute recyclable material efficiently and optimise path of collection 
+Idea 
+Part 1 ::
+1. SMart bin : IOT project
+of the smart bin : functionality is to check level of garbage inside : send signal to cloud about its status  to cloud 
+
+When the Collector comes takes the update from cloud , marks all the bins that are full and take up the least path indicated 
+by the app as found by using some smart algorithm 
+
+Part 2 ::
+collected recyclable material distribution to various factories that need it.
+web app for that : 
+kind of material needed 
