@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="initial-scale=1.0, user￾scalable=no">
+<meta charset="utf-8">
+<style>
+#map {
+height: 900px;
+width: 100%;
+}
+</style>
+</head>
+<body>
+<h1>Factory</h1>
+<!-- <div id="text"></div> -->
+<div id="map"></div>
+<script>
+// function getArr(){
+// var xmlhttp = new XMLHttpRequest();
+// var url = "https://dash￾trash.herokuapp.com/";
+// xmlhttp.onreadystatechange = function() {
+// if (this.readyState == 4 && 
+this.status == 200) {
+// var myArr = 
+JSON.parse(this.responseText);
+// myFunction(myArr);
+// }
+// };
+// xmlhttp.open("GET", url, true);
+// // xmlhttp.send();
+// }
+var map;
+var uluru1 = {lat: 22.297, lng: 87.293};
+var uluru2 = {lat: 22.31, lng: 87.265};
+var uluru3 = {lat: 22.335, lng: 87.275};
+var coordinates1 = [];
+var coordinates2 = [];
+var coordinates3 = [];
+var sp = [ [22.328, 87.278], [22.33, 87.282], 
+[22.325, 87.274], [22.316, 87.258], [22.32, 87.26], [22.302, 
+87.294], [22.302, 87.29], [22.3, 87.29], [22.312, 87.262]]
+function getCordinates(coordinates){
+for(var i=0;i<sp.length;i+=1){
+position = {lat:sp[i][0],lng:sp[i]
+[1]}
+coordinates.push(position)
+} }
+function toggleBounce() {
+if (marker.getAnimation() !== null) {
+marker.setAnimation(null);
+} else {
+marker.setAnimation(google.maps.Animation.BOUNCE);
+} }
+function initMap() {
+center_coord = {lat: 22.312, lng: 87.282};
+// alert(uluru.lat);
+// var directionsService = new 
+google.maps.DirectionsService;
+// var directionsDisplay = new 
+google.maps.DirectionsRenderer;
+map = new 
+google.maps.Map(document.getElementById('map'), {
+zoom: 14,
+center: center_coord,
+mapTypeId: 
+google.maps.MapTypeId.ROADMAP
+});
+// addMarkers(sp);
+setSegrationCenter();
+}
+function setSegrationCenter(){
+// var uluru = {lat: 22.312, lng: 87.282};
+//centroids = getClusters();
+var image = {
+url: 'https://
+developers.google.com/maps/documentation/javascript/examples/full/
+images/beachflag.png',
+ // This marker is 20 pixels wide by 32 
+pixels high.
+ size: new google.maps.Size(40, 32),
+ // The origin for this image is (0, 0).
+ origin: new google.maps.Point(0, 0),
+ // The anchor for this image is the base 
+of the flagpole at (0, 32).
+ anchor: new google.maps.Point(0, 32)
+ };
+ var marker = new google.maps.Marker({
+ position: uluru1,
+ map: map,
+ animation: google.maps.Animation.DROP,
+ icon: image
+ });
+ ( function(marker) {
+// add click event
+google.maps.event.addListener(marker, 'click', function() {
+infowindow = new 
+google.maps.InfoWindow({
+content: 
+"(lat:" + uluru.lat + ", long:" + uluru.lng + ")"
+});
+infowindow.open(map, marker);
+});
+})(marker);
+var marker = new 
+google.maps.Marker({
+position: uluru2,
+map: map,
+animation: 
+google.maps.Animation.DROP,
+icon: image
+});
+( function(marker) {
+// add click event
+google.maps.event.addListener(marker, 'click', function() {
+infowindow = new 
+google.maps.InfoWindow({
+content: 
+"(lat:" + uluru.lat + ", long:" + uluru.lng + ")"
+});
+infowindow.open(map, marker);
+});
+})(marker);
+var marker = new 
+google.maps.Marker({
+position: uluru3,
+map: map,
+animation: 
+google.maps.Animation.DROP,
+icon: image
+});
+( function(marker) {
+// add click event
+google.maps.event.addListener(marker, 'click', function() {
+infowindow = new 
+google.maps.InfoWindow({
+content: 
+"(lat:" + uluru.lat + ", long:" + uluru.lng + ")"
+});
+infowindow.open(map, marker);
+});
+})(marker);
+addMarkers();
+// // getArr()
+// getCordinates(sp);
+// var cityCircle = new 
+google.maps.Circle({
+// strokeColor: '#FF0000',
+// strokeOpacity: 0.8,
+// strokeWeight: 2,
+// fillColor: '#FF0000',
+// fillOpacity: 0.35,
+// map: map,
+// center: 
+{lat:uluru.lat,lng:uluru.lng},
+// radius: 3000
+// });
+// drawPath();
+}
+function getClusters(k=3,tol=0.001, max_iter=100){
+centroids = {};
+for(var i=0;i<k;i+=1){
+centroids[i] = sp[i];
+}
+console.log(centroids)
+for(var i=0;i<max_iter;i+=1){
+classifications = {};
+for(var i=0;i<k;i+=1)
+classifications[i] = []
+for(var x=0;x<sp.length;x+=1){
+var min_dist = 10000;
+var classification = -1;
+for (var i=0; i<k; i++) {
+var dist = 
+Math.sqrt( Math.pow((sp[x][0]-centroids[i][0]), 2) + Math.pow((sp[x]
+[1]-centroids[i][1]), 2) );
+if(dist < 
+min_dist){
+min_dist 
+= dist;
+classification = i;
+}
+classifications[classification].push(sp[x])
+} }
+console.log(classifications)
+prev_centroids = centroids
+console.log(prev_centroids)
+for(var i=0;i<k;i+=1){
+var avg_lat,avg_lng;
+for(var i=0;i<k;i+=1){
+avg_lat += 
+classifications[i][0];
+avg_lng += 
+classifications[i][1];
+}
+avg_lat = avg_lat/k
+avg_lng = avg_lng/k
+centroids[i] = 
+[avg_lat,avg_lng]
+}
+// var optimized = true
+for(var c=0;c<k;c+=1){
+original_centroid = 
+prev_centroids[c]
+current_centroid = 
+centroids[c]
+// 
+if(Math.sum((current_centroid-original_centroid)/
+original_centroid*100.0) > tol){
+// // 
+print(np.sum((current_centroid-original_centroid)/
+original_centroid*100.0))
+// optimized = false
+// }
+}
+// if(optimized)
+// break
+}
+console.log(centroids)
+return centroids
+}
+// window.onload = getClusters;
+function addMarkers(){
+for(var i=0;i<sp.length;i+=1){
+x_cord = sp[i][0]
+y_cord = sp[i][1]
+position = {lat:sp[i][0],lng:sp[i]
+[1]}
+var dist1 = 
+Math.sqrt( Math.pow((x_cord-uluru1.lat), 2) + Math.pow((y_cord￾uluru1.lng), 2) );
+var dist2 = 
+Math.sqrt( Math.pow((x_cord-uluru2.lat), 2) + Math.pow((y_cord￾uluru2.lng), 2) );
+var dist3 = 
+Math.sqrt( Math.pow((x_cord-uluru3.lat), 2) + Math.pow((y_cord￾uluru3.lng), 2) );
+var dist = 
+Math.min(dist1,dist2,dist3)
+var marker = new 
+google.maps.Marker({
+position: position,
+map: map,
+animation: 
+google.maps.Animation.DROP
+});
+( function(marker, i) {
+// add click event
+google.maps.event.addListener(marker, 'click', function() {
+infowindow = new 
+google.maps.InfoWindow({
+content: 
+"(lat:" + sp[i][0] + ", long:" + sp[i][1] + ")"
+});
+infowindow.open(map, marker);
+});
+})(marker, i);
+if(dist == dist1){
+marker.setIcon('http://
+maps.google.com/mapfiles/ms/icons/green-dot.png');
+coordinates1.push(position)
+}
+else if(dist == dist2){
+marker.setIcon('http://
+maps.google.com/mapfiles/ms/icons/blue-dot.png');
+coordinates2.push(position)
+}
+else if(dist == dist3){
+marker.setIcon('http://
+maps.google.com/mapfiles/ms/icons/red-dot.png');
+coordinates3.push(position)
+} }
+//sp.unshift([uluru.lat,uluru.lng]);
+//sp.push([uluru.lat,uluru.lng]);
+}
+function drawPath() {
+// poly = new google.maps.Polyline({
+// path: coordinates,
+// strokeColor: '#FF0000',
+// strokeOpacity: 1.0,
+// strokeWeight: 2
+// });
+// poly.setMap(map);
+var Poly = new google.maps.Polygon({
+paths: coordinates,
+strokeColor: '#FF0000',
+strokeOpacity: 0.8,
+strokeWeight: 2,
+fillColor: '#FF0000',
+fillOpacity: 0.0
+});
+Poly.setMap(map);
+}
+</script>
+<script async defer src="https://maps.googleapis.com/maps/
+api/js?
+key=AIzaSyAY4uMMBM0CFJ3KHEr5QoWcdKimB0jg18o&callback=initMap"></
+script>
+</body>
+</html>
