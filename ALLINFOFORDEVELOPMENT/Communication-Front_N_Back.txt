@@ -1,0 +1,17 @@
+
+Basic Defination :
+Server: Browser Request arrives at the server.Backend code runs on the server.
+Request for backend arrives at the server and is passed on to the backend code.
+
+Backend: prepared data that is requested and transmitted back to users browser.Backend code always runs on the server
+not on the user machine.
+
+Frontend : CSS, HTML and JS in broswer.
+While the backend code can be assembling a HTML response, the final HTML arriving in the browser is meant here.
+
+BROWSER : is an application running on users device.
+Sends out HTTP requests , recieves response, processes the received data, uses it to render a usable page. 
+
+
+HTTP request/response payloads
+
