@@ -1,0 +1,33 @@
+It’s code that connects the web to a database, manages user connections, and powers the web application itself. 
+
+Backend === Server side 
+
+web UI can send requests to the backend asking to render some HTML, save user input in a database,
+authenticate a user, send an email or process a payment request
+
+JavaScript using the Node.js server-side runtime. 
+It supports its own set of JavaScript features and provides a set of API’s
+to satisfy backend use cases, such as working with the file system. 
+
+Node.js : can do both frontend and backend
+Node.js framework : express, koa , loopback
+
+Django file maintain system is made on python.
+
+Flask is a popular framework for web development
+
+Java designed to be portable between different platforms: the sources are compiled to
+Java bytecode that can be run on a Java Virtual Machine for any platform
+
+
+
+DATABASE :
+To store users data .
+DBS (Data base Managment system)
+
+
+Relational db : MySql , since it is open sourced 
+Non-Relational : Store data in model.
+1.MongoDB : Stores JSON like objects
+2.Redis: in memory key-value database, often used to temporarily store catched data and transfer msg.
+ -> map 
